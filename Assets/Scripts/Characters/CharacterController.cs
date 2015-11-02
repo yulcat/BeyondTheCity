@@ -11,11 +11,11 @@ namespace BeyondTheCity
 		}
 		State characterState = State.onGround;
 		
-		void OnCollisionStay(Collision2D coll)
+		void OnCollisionStay2D(Collision2D coll)
 		{
 			characterState = State.onGround;
 		}
-		void OnCollisionExit(Collision2D coll)
+		void OnCollisionExit2D(Collision2D coll)
 		{
 			characterState = State.onAir;
 		}
@@ -38,7 +38,7 @@ namespace BeyondTheCity
 			
 			if (Input.GetKeyDown("space") && characterState == State.onGround)
 			{
-				Debug.Log("Jump");
+				//Debug.Log("Jump");
 				StartCoroutine(Jump());
 			}
 		}
