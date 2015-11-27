@@ -4,7 +4,7 @@ using System.Collections;
 public class RatHole : MonoBehaviour 
 {
 	public GameObject pairHole;
-	float holeTimer;
+	public float holeTimer;
 	
 	void OnTriggerStay2D(Collider2D coll)
 	{
@@ -16,7 +16,8 @@ public class RatHole : MonoBehaviour
 	
 	IEnumerator TeleportTarget(GameObject target)
 	{
-		holeTimer = 3;
+		holeTimer = 5;
+		pairHole.GetComponent<RatHole>().holeTimer = 5;
 		target.SetActive(false);
 		yield return new WaitForSeconds(1.0f);
 		target.SetActive(true);
