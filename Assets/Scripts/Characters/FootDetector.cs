@@ -7,7 +7,6 @@ public class FootDetector : MonoBehaviour
 	
 	void OnTriggerStay2D(Collider2D coll)
 	{
-		Debug.Log(coll.name);
 		if (coll.transform.tag == "Ground")
 			owner.isGrounded = true;
 	}
