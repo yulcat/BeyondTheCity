@@ -13,7 +13,7 @@ public class HumanAI : MonoBehaviour
 	public Favority towardMouse;
 	public GameObject sight;
 	Vector3 destination;
-	GameObject target;
+	GameObject targetAnimal;
 	
 	void SetTarget()
 	{
