@@ -3,25 +3,35 @@ using System.Collections;
 
 public class AnimalBehavior : MonoBehaviour 
 {
-	public enum AnimalState
-	{
-		Gronded, Airbourne
-	}
-	public AnimalState State
+	public bool isGrounded;
+	public bool isPushing
 	{
 		get
 		{
-			return AnimalState.Gronded;
+			if (pushingObject == null)
+				return false;
+			else
+				return true;
 		}
 	}
+	
+	//fields
 	public float jumpPower;
 	public float moveSpeed;
-	public void Jump()
+	public float pushPower;
+	public float maxWeight;
+	
+	GameObject pushingObject;
+	
+	void Update()
 	{
-		
-	}
-	public void Walk()
-	{
-		
+		if (!isPushing)
+			transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * moveSpeed);
+		else if (Mathf.Sign(pushingObject.transform.position.x - transform.position.x) != Mathf.Sign(Input.GetAxis("Horizontal")))
+			transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * moveSpeed);
+		else if (maxWeight > 0)
+			;
+		else
+			transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * moveSpeed * 0.5f);
 	}
 }

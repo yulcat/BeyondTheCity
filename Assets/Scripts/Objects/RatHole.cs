@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MouseBehavior : AnimalBehavior 
+public class RatHole : MonoBehaviour 
 {
-
+	
 }
