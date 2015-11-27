@@ -5,12 +5,12 @@ public class FootDetector : MonoBehaviour
 {
 	public AnimalBehavior owner;
 	
-	void OnCollisionStay2D(Collision2D coll)
+	void OnTriggerStay2D(Collider2D coll)
 	{
 		if (coll.transform.tag == "Ground")
 			owner.isGrounded = true;
 	}
-	void OnCollisionExit2D(Collision2D coll)
+	void OnTriggerExit2D(Collider2D coll)
 	{
 		if (coll.transform.tag == "Ground")
 			owner.isGrounded = false;
