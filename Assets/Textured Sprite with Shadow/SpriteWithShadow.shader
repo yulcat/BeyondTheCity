@@ -93,7 +93,9 @@ Shader "2D/SpriteWithShadow"
                 
                 float4 original = tex2D(_MainTex,i.uv);
                 float4 o = float4(0,0,0,(sum+newsum)*0.5*frac(_ShadowColor)) + original*original.w;
-                float2 tuv = float2(i.uv.x * UNITY_MATRIX_MV[0][0],i.uv.y*UNITY_MATRIX_MV[1][1])*_tiling;
+                float2 tuv = float2(
+                       frac(i.uv.x * UNITY_MATRIX_MV[0][0]*_tiling),
+                       frac(i.uv.y*UNITY_MATRIX_MV[1][1]*_tiling));
                 o = tex2D(_SubTex,tuv).x * o * i.color;
                  return o;
              }
