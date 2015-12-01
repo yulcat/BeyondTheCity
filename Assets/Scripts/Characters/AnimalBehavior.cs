@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AnimalBehavior : MonoBehaviour 
+public abstract class AnimalBehavior : MonoBehaviour 
 {
+	public GameObject barkSound;
+	public float barkPower;
+	public Animator animator;
+	public Rigidbody2D body;
 	public bool isGrounded;
 	public bool isPushing
 	{
@@ -15,6 +19,25 @@ public class AnimalBehavior : MonoBehaviour
 		}
 	}
 	
+	enum AnimState
+	{
+		Stay, Walk, JumpUp, JumpDown
+	}
+	
+	AnimState currentAnim;
+	void AnimationChange(AnimState newState)
+	{
+		if (newState == currentAnim)
+			return;
+		else
+		{
+			Debug.Log(newState.ToString());
+			currentAnim = newState;
+			animator.SetTrigger(currentAnim.ToString());
+		}
+	}
+	
+	
 	//fields
 	public float jumpPower;
 	public float moveSpeed;
@@ -25,31 +48,61 @@ public class AnimalBehavior : MonoBehaviour
 	
 	void Update()
 	{
-		if (!isPushing)
-			transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * moveSpeed);
-		else if (Mathf.Sign(pushingObject.transform.position.x - transform.position.x) != Mathf.Sign(Input.GetAxis("Horizontal")))
-			transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * moveSpeed);
-		else if (pushingObject.GetComponent<MovableObject>().weight > maxWeight)
-			;
-		else
-			transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * moveSpeed * 0.5f);
-	
-		if (Input.GetKeyDown("space") && isGrounded)
+		if (!isGrounded)
 		{
-			//Debug.Log("Jump");
-			StartCoroutine(Jump());
+			if (body.velocity.y < 0)
+				AnimationChange(AnimState.JumpDown);
+			else
+				AnimationChange(AnimState.JumpUp);
 		}
 	}
 	
-	IEnumerator Jump()
+	public void Move(float moveInput)
 	{
-		float counter = 0.1f;
-		while(counter > 0)
+		if (isGrounded)
 		{
-			GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpPower);
-			counter -= Time.deltaTime;
-			yield return null;
+			if (moveInput == 0)
+				AnimationChange(AnimState.Stay);
+			else
+				AnimationChange(AnimState.Walk);
 		}
-		yield break;
+		body.velocity = body.velocity.y * Vector2.up + moveSpeed * moveInput * Vector2.right;
+	}
+	public virtual void Jump()
+	{
+		if (!isGrounded)
+			return;
+		Debug.Log("Jump");
+		StartCoroutine(JumpUp());
+	}
+	public void Bark()
+	{
+		barkSound.SetActive(true);
+		barkSound.transform.position = transform.position + Vector3.forward * -4 ;
+		barkSound.transform.localScale = barkPower * Vector3.one;
+		Debug.Log("Bark");
+		Invoke("DisableBark", 0.5f);
+	}
+	
+	void DisableBark()
+	{
+		barkSound.SetActive(false);
+	}
+	
+	public virtual void Interact()
+	{
+		Debug.Log("Interact");	
+	}
+	
+	public IEnumerator JumpUp()
+	{
+		float jumpTimer = 0.2f;
+		
+		while (jumpTimer > 0)
+		{
+			body.AddForce(jumpPower * Vector2.up);
+			jumpTimer -= Time.deltaTime;
+			yield return new WaitForFixedUpdate();
+		}
 	}
 }

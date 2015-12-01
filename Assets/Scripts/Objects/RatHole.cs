@@ -6,20 +6,22 @@ public class RatHole : MonoBehaviour
 	public GameObject pairHole;
 	public float holeTimer;
 	
-	void OnTriggerStay2D(Collider2D coll)
-	{
-		if (coll.transform.tag == "Mouse" && holeTimer == 0)
-		{
-			StartCoroutine(TeleportTarget(coll.gameObject));
-		}
-	}
+	//  void OnTriggerStay2D(Collider2D coll)
+	//  {
+	//  	if (coll.transform.tag == "Mouse" && holeTimer == 0)
+	//  	{
+	//  		StartCoroutine(TeleportTarget(coll.gameObject));
+	//  	}
+	//  }
 	
-	IEnumerator TeleportTarget(GameObject target)
+	public IEnumerator TeleportTarget(GameObject target)
 	{
 		holeTimer = 5;
 		pairHole.GetComponent<RatHole>().holeTimer = 5;
 		target.SetActive(false);
-		yield return new WaitForSeconds(1.0f);
+		Debug.Log("Disappeared");
+		//yield return new WaitForSeconds(1.0f);
+		Debug.Log("Hello");
 		target.SetActive(true);
 		target.transform.position = pairHole.transform.position;
 		yield break;

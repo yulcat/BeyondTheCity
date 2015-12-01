@@ -3,5 +3,31 @@ using System.Collections;
 
 public class CatBehavior : AnimalBehavior
 {
+	bool isWalled = false;
 	
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+		if (coll.gameObject.tag == "Wall")
+			isWalled = true;
+	}
+	
+	void OnCollisionExit2D(Collision2D coll)
+	{
+		if (coll.gameObject.tag == "Wall")
+			isWalled = false;
+	}
+	
+	public override void Jump()
+	{
+		if (isGrounded || isWalled)
+		{
+			StartCoroutine(JumpUp());
+		}
+	}
+	
+	IEnumerator WallJump(float direction)
+	{
+		
+		yield break;
+	}
 }
