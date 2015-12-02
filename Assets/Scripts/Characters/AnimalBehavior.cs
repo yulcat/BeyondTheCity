@@ -1,8 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class AnimalBehavior : MonoBehaviour 
+public abstract class AnimalBehavior : MonoBehaviour, IFloorable 
 {
+	public Floor currentFloor;
+	public void SetFloor(Floor newFloor)
+	{
+		currentFloor = newFloor;
+	}
+	
 	public GameObject barkSound;
 	public float barkPower;
 	public Animator animator;
