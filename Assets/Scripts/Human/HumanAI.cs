@@ -35,6 +35,11 @@ public class HumanAI : MonoBehaviour, IFloorable
 			currentAnim = newState;
 			animator.SetTrigger(currentAnim.ToString());
 		}
+		
+		if (currentAnim == AnimState.Stay)
+			body.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+		else
+			body.constraints = RigidbodyConstraints2D.FreezeRotation;
 	}
 	public void SetFloor(Floor newFloor)
 	{
@@ -162,7 +167,7 @@ public class HumanAI : MonoBehaviour, IFloorable
 	IEnumerator ChaseSound(Vector2 destination, Floor targetFloor)
 	{
 		Debug.Log("Begin");
-		bool isOdd = true;
+		bool isOnStair = false;
 		List<Vector2> path = new FloorSearcher(GetPos(), destination, currentFloor, targetFloor).GetPath();
 		Queue<Vector2> pathQueue = new Queue<Vector2>();
 		if (path == null || path.Count == 0)
@@ -174,11 +179,34 @@ public class HumanAI : MonoBehaviour, IFloorable
 		{
 			pathQueue.Enqueue(path[i]);
 		}
-		while(pathQueue.Count > 1)
+		while(pathQueue.Count > 0)
 		{
 			Vector2 nextDestine = pathQueue.Dequeue();
-			if (isOdd)
+			Vector2 pastDestine = Vector2.zero;
+			if (!isOnStair)
 			{
+				float direction = Mathf.Sign(nextDestine.x - GetPos().x);
+				Move(direction);
+				while(Mathf.Abs(nextDestine.x - GetPos().x) > 0.05f)
+				{
+					Move(direction);
+					yield return null;
+				}
+				BeStay();
+				isOnStair = true;
+				Debug.Log("Stair!");
+			}
+			else
+			{
+				if (pastDestine.y < nextDestine.y)
+				{
+					body.velocity = Vector2.up * 5;
+					yield return new WaitForSeconds(0.5f);
+				}
+				else
+				{
+					
+				}
 				float direction = Mathf.Sign(nextDestine.x - GetPos().x);
 				Move(direction);
 				while(Mathf.Abs(nextDestine.x - GetPos().x) > 0.5f)
@@ -186,15 +214,10 @@ public class HumanAI : MonoBehaviour, IFloorable
 					Move(direction);
 					yield return null;
 				}
-				Debug.Log("Upstair");
 				BeStay();
-				isOdd = false;
+				isOnStair = false;
 			}
-			else
-			{
-				transform.position = nextDestine;
-				isOdd = true;
-			}
+			pastDestine = nextDestine;
 		}
 	}
 }

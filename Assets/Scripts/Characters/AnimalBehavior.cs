@@ -50,6 +50,11 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 			currentAnim = newState;
 			animator.SetTrigger(currentAnim.ToString());
 		}
+		
+		if (currentAnim == AnimState.Stay)
+			body.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+		else
+			body.constraints = RigidbodyConstraints2D.FreezeRotation;
 	}
 	
 	

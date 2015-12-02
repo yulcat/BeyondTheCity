@@ -5,6 +5,6 @@ public class StairCase : MonoBehaviour
 {
 	public Floor upper;
 	public Floor lower;
-	public GameObject upStair;
-	public GameObject downStair;
+	public Vector2 goUp;
+	public Vector2 goDown;
 }

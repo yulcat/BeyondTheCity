@@ -18,14 +18,19 @@ public class Floor : MonoBehaviour
 		}
 	}
 	
-	public float height;
-	public StairCase[] stairInit;
+	public List<StairCase> stairInit;
 	public List<Stair> stairs;
 	
 	void Start()
 	{
+		stairInit = new List<StairCase>();
+	}
+	
+	public bool switchOn;
+	void Initialize()
+	{
 		stairs = new List<Stair>();
-		for (int i=0; i<stairInit.Length; i++)
+		for (int i=0; i<stairInit.Count; i++)
 		{
 			Floor destination;
 			Vector2 enterPos;
@@ -33,17 +38,26 @@ public class Floor : MonoBehaviour
 			if (stairInit[i].upper == this)
 			{
 				destination = stairInit[i].lower;
-				enterPos = stairInit[i].downStair.transform.position;
-				outPos = stairInit[i].upStair.transform.position;
+				enterPos = stairInit[i].goDown;
+				outPos = stairInit[i].goUp;
 			}
 			else
 			{
 				destination = stairInit[i].upper;
-				enterPos = stairInit[i].upStair.transform.position;
-				outPos = stairInit[i].downStair.transform.position;
+				enterPos = stairInit[i].goUp;
+				outPos = stairInit[i].goDown;
 			}
 			Stair newStair = new Stair(enterPos, outPos, destination);
 			stairs.Add(newStair);
+		}
+	}
+	
+	void Update()
+	{
+		if (switchOn)
+		{
+			Initialize();
+			switchOn = false;
 		}
 	}
 	
