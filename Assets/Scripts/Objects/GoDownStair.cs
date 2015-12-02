@@ -5,7 +5,7 @@ public class GoDownStair : MonoBehaviour
 {
 	public StairCase owner;
 	
-	void OnTriggerEnter2D(Collider2D coll)
+	void OnTriggerStay2D(Collider2D coll)
 	{
 		Debug.Log("Wow");
 		if (coll.transform.tag == "Ground")

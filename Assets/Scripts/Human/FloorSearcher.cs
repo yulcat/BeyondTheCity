@@ -25,7 +25,11 @@ public class FloorSearcher
 		{
 			resultPath.Add(prevPath[i]);
 		}
-		
+		if (StartingFloor.stairs == null)
+		{
+			Debug.Log("No stairs on "  + StartingFloor.gameObject.name);
+			return;
+		}
 		for (int i=0; i<StartingFloor.stairs.Count; i++)
 		{
 			Floor.Stair targetStair = StartingFloor.stairs[i];

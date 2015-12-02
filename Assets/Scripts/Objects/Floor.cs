@@ -18,13 +18,8 @@ public class Floor : MonoBehaviour
 		}
 	}
 	
-	public List<StairCase> stairInit;
+	public List<StairCase> stairInit = new List<StairCase>();
 	public List<Stair> stairs;
-	
-	void Start()
-	{
-		stairInit = new List<StairCase>();
-	}
 	
 	public bool switchOn;
 	void Initialize()
@@ -50,6 +45,7 @@ public class Floor : MonoBehaviour
 			Stair newStair = new Stair(enterPos, outPos, destination);
 			stairs.Add(newStair);
 		}
+		Debug.Log(stairs.Count);
 	}
 	
 	void Update()
