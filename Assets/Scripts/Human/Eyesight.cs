@@ -37,6 +37,8 @@ public class Eyesight : MonoBehaviour
 		
 		if (dist != -1 && dist <= sightRange)
 			owner.SeePlayer(players[playerIndex]);
+		else
+			owner.SeeNothing();
 	}
 	
 	bool CheckAngle(Vector2 myPos, Vector2 targetPos)

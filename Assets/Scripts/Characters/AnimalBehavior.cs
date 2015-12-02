@@ -8,6 +8,14 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 	{
 		currentFloor = newFloor;
 	}
+	public Floor GetFloor()
+	{
+		return currentFloor;
+	}
+	public Vector2 GetPos()
+	{
+		return transform.position;
+	}
 	
 	public GameObject barkSound;
 	public float barkPower;
