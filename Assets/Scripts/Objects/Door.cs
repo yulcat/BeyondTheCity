@@ -50,6 +50,7 @@ public class Door : MonoBehaviour
 		
 		if (doorTimer > 0.8f)
 		{
+			AnimationChange(AnimState.Opened);
 			doorCol.enabled = false;
 			doorTimer = 0;
 		}
