@@ -8,7 +8,7 @@ public class Door : MonoBehaviour
 	{
 		Closed, Close, Opened, Open
 	}
-	AnimState currentAnim;
+	AnimState currentAnim = AnimState.Closed;
 	public Collider2D doorCol;
 	float doorTimer;
 	
