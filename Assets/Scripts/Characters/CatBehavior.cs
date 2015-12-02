@@ -21,7 +21,8 @@ public class CatBehavior : AnimalBehavior
 	{
 		if (isGrounded || isWalled)
 		{
-			StartCoroutine(JumpUp());
+			//  StartCoroutine(JumpUp());
+			body.velocity = new Vector2(body.velocity.x, jumpPower);
 		}
 	}
 	

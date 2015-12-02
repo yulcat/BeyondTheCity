@@ -67,17 +67,17 @@ public abstract class AnimalBehavior : MonoBehaviour
 			else
 			{
 				AnimationChange(AnimState.Walk);
-				if (isRightHeading && moveInput < 0)
-				{
-					isRightHeading = false;
-					transform.eulerAngles = new Vector3(0, 180, 0);
-				}
-				else if(!isRightHeading && moveInput > 0)
-				{
-					isRightHeading = true;
-					transform.eulerAngles = Vector3.zero;
-				}
 			}
+		}
+		if (isRightHeading && moveInput < 0)
+		{
+			isRightHeading = false;
+			transform.eulerAngles = new Vector3(0, 180, 0);
+		}
+		else if(!isRightHeading && moveInput > 0)
+		{
+			isRightHeading = true;
+			transform.eulerAngles = Vector3.zero;
 		}
 		body.velocity = body.velocity.y * Vector2.up + moveSpeed * moveInput * Vector2.right;
 	}
@@ -86,7 +86,8 @@ public abstract class AnimalBehavior : MonoBehaviour
 		if (!isGrounded)
 			return;
 		Debug.Log("Jump");
-		StartCoroutine(JumpUp());
+		body.velocity = new Vector2(body.velocity.x, jumpPower);
+		//  StartCoroutine(JumpUp());
 	}
 	public void Bark()
 	{
