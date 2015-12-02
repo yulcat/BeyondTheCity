@@ -20,7 +20,12 @@ public class Eyesight : MonoBehaviour
 			if (!CheckAngle(myPos, targetPos))
 				continue;
 			RaycastHit2D ray = Physics2D.Linecast(myPos, targetPos);
-			if (ray.transform.gameObject != players[i])
+			Debug.DrawLine(myPos, targetPos);
+			if (ray == false)
+			{
+				continue;
+			}
+			if (ray.transform != players[i])
 				continue;
 			float newDist = (targetPos - myPos).magnitude;
 			if (dist == -1 || dist > newDist)
@@ -31,17 +36,13 @@ public class Eyesight : MonoBehaviour
 		}
 		
 		if (dist != -1 && dist <= sightRange)
-			CatchOnSight(players[playerIndex]);
+			owner.SeePlayer(players[playerIndex]);
 	}
 	
 	bool CheckAngle(Vector2 myPos, Vector2 targetPos)
 	{
-		float angle = Mathf.Atan2(targetPos.y - myPos.y, targetPos.x - myPos.x) * Mathf.Rad2Deg;
-		return (angle <= 180 + fov/2 && angle >= 180 + fov/2);
-	}
-	
-	void CatchOnSight(Transform target)
-	{
-		
+		float direction = (transform.eulerAngles.y == 0)? 1 : -1;
+		float angle = Mathf.Atan2(targetPos.y - myPos.y, direction * (-targetPos.x + myPos.x)) * Mathf.Rad2Deg;
+		return (Mathf.Abs(angle) < fov/2);
 	}
 }

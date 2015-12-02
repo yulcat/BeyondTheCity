@@ -12,7 +12,7 @@ public class MovableObject : MonoBehaviour
 	}
 	void OnTriggerStay2D(Collider2D coll)
 	{
-		Debug.Log("Enabled");
+		//  Debug.Log("Enabled");
 		Color color;
 		if (coll.gameObject.tag == "Mouse")
 		{
@@ -23,7 +23,7 @@ public class MovableObject : MonoBehaviour
 	
 	void OnTriggerExit2D(Collider2D coll)
 	{
-		Debug.Log("Disabled");
+		//  Debug.Log("Disabled");
 		Color color;
 		if (coll.gameObject.tag == "Mouse")
 		{

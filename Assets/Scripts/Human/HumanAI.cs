@@ -32,4 +32,9 @@ public class HumanAI : MonoBehaviour, IFloorable
 	{
 		
 	}
+	
+	public void SeePlayer(Transform target)
+	{
+		Debug.Log(target.name);
+	}
 }
