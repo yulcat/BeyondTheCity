@@ -1,13 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class HumanAI : MonoBehaviour, IFloorable
 {
-	public enum Favority
-	{
-		PositiveAttract, NegativeAttract, NegativeRepulse, Indifferent
-	}
-	
 	public Floor currentFloor;
 	
 	public void SetFloor(Floor newFloor)
@@ -15,14 +10,25 @@ public class HumanAI : MonoBehaviour, IFloorable
 		currentFloor = newFloor;
 	}
 	
+	public enum Favority
+	{
+		PositiveAttract, NegativeAttract, NegativeRepulse, Indifferent
+	}
+	
 	public Favority towardCat;
 	public Favority towardDog;
 	public Favority towardMouse;
-	public GameObject sight;
+	
 	Vector2 destination;
+	List<Vector2>Path;
 	GameObject targetAnimal;
 	
 	void Update()
+	{
+		
+	}
+	
+	void HearSound()
 	{
 		
 	}
