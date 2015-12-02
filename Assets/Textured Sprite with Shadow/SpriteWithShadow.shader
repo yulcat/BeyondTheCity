@@ -9,6 +9,7 @@ Shader "2D/SpriteWithShadow"
      }
      SubShader
      {
+         Cull Off
          Tags 
          { 
              "RenderType" = "Transparent"

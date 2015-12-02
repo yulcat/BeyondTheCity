@@ -8,6 +8,7 @@ public abstract class AnimalBehavior : MonoBehaviour
 	public Animator animator;
 	public Rigidbody2D body;
 	public bool isGrounded;
+	public bool isRightHeading = true;
 	public bool isPushing
 	{
 		get
@@ -64,7 +65,19 @@ public abstract class AnimalBehavior : MonoBehaviour
 			if (moveInput == 0)
 				AnimationChange(AnimState.Stay);
 			else
+			{
 				AnimationChange(AnimState.Walk);
+				if (isRightHeading && moveInput < 0)
+				{
+					isRightHeading = false;
+					transform.eulerAngles = new Vector3(0, 180, 0);
+				}
+				else if(!isRightHeading && moveInput > 0)
+				{
+					isRightHeading = true;
+					transform.eulerAngles = Vector3.zero;
+				}
+			}
 		}
 		body.velocity = body.velocity.y * Vector2.up + moveSpeed * moveInput * Vector2.right;
 	}

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CatBehavior : AnimalBehavior
 {
-	bool isWalled = false;
+	public bool isWalled = false;
 	
 	void OnCollisionEnter2D(Collision2D coll)
 	{
