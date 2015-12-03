@@ -36,6 +36,8 @@ public class HumanAI : MonoBehaviour, IFloorable
 		{
 			Debug.Log(newState.ToString());
 			currentAnim = newState;
+			animator.ResetTrigger("Stay");
+			animator.ResetTrigger("Walk");
 			animator.SetTrigger(currentAnim.ToString());
 		}
 		
