@@ -9,7 +9,7 @@ public class GoUpStair : MonoBehaviour
 	{
 		if (coll.transform.tag == "Ground")
 		{
-			Floor target = coll.GetComponent<Floor>();
+			Floor target = coll.GetComponent<SolidGround>().floor;
 			if (target != null && !target.stairInit.Contains(owner))
 			{
 				owner.goUp = transform.position;

@@ -11,7 +11,7 @@ public class GoDownStair : MonoBehaviour
 		if (coll.transform.tag == "Ground")
 		{
 			Debug.Log("Found Ground");
-			Floor target = coll.GetComponent<Floor>();
+			Floor target = coll.GetComponent<SolidGround>().floor;
 			if (target != null && !target.stairInit.Contains(owner))
 			{
 				owner.goDown = transform.position;

@@ -59,11 +59,4 @@ public class Floor : MonoBehaviour
 				Initialize();
 		}
 	}
-	
-	void OnCollisionEnter2D(Collision2D coll)
-	{
-		IFloorable target = coll.gameObject.GetComponent<IFloorable>();
-		if (target != null)
-			target.SetFloor(this);
-	}
 }
