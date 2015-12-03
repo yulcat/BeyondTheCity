@@ -192,6 +192,8 @@ public class HumanAI : MonoBehaviour, IFloorable
 		string targetTag = coll.transform.tag;
 		if (targetTag == "Cat" || targetTag == "Dog" || targetTag == "Mouse")
 		{
+			if (emoticonHostile.activeInHierarchy)
+				GameObject.Find("SceneControl").GetComponent<SceneControl>().RestartLevel();
 			float deltaX = coll.transform.position.x - transform.position.x;
 			if (deltaX > 0 && isLeftHeaded)
 			{
