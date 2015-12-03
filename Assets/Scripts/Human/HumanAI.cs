@@ -266,16 +266,18 @@ public class HumanAI : MonoBehaviour, IFloorable
 			}
 			else
 			{
-				if (pastDestine.y < nextDestine.y)
+				float direction = Mathf.Sign(nextDestine.x - GetPos().x);
+				if (transform.position.y < nextDestine.y)
 				{
+					nextDestine += Vector2.right * direction;
 					body.velocity = Vector2.up * 5;
 					yield return new WaitForSeconds(0.5f);
 				}
 				else
 				{
-					
+					nextDestine += Vector2.right * 2f * direction;
+					DownFloor();
 				}
-				float direction = Mathf.Sign(nextDestine.x - GetPos().x);
 				Move(direction);
 				while(Mathf.Abs(nextDestine.x - GetPos().x) > 0.5f)
 				{
@@ -287,5 +289,16 @@ public class HumanAI : MonoBehaviour, IFloorable
 			}
 			pastDestine = nextDestine;
 		}
+	}
+	
+	public GameObject passableFeet;
+	public void DownFloor()
+	{
+		passableFeet.SetActive(false);
+		Invoke("ReActivatePass", 0.3f);
+	}
+	void ReActivatePass()
+	{
+		passableFeet.SetActive(true);
 	}
 }

@@ -117,6 +117,17 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 		Invoke("DisableBark", 0.5f);
 	}
 	
+	public GameObject passableFeet;
+	public void DownFloor()
+	{
+		passableFeet.SetActive(false);
+		Invoke("ReActivatePass", 0.3f);
+	}
+	void ReActivatePass()
+	{
+		passableFeet.SetActive(true);
+	}
+	
 	void DisableBark()
 	{
 		barkSound.SetActive(false);

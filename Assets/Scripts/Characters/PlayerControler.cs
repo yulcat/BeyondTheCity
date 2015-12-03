@@ -22,6 +22,8 @@ public class PlayerControler : MonoBehaviour
 			targetCharacter.Jump();
 		if (Input.GetButtonDown("Interact1"))
 			targetCharacter.Interact();
+		if (Input.GetAxis("Vertical1") < 0)
+			targetCharacter.DownFloor();
 	}
 	
 	void MoveCommand(float moveInput)
@@ -39,5 +41,9 @@ public class PlayerControler : MonoBehaviour
 	void InteractCommand()
 	{
 		targetCharacter.Bark();
+	}
+	void DownCommand()
+	{
+		targetCharacter.DownFloor();
 	}
 }
