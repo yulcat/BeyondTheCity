@@ -21,7 +21,7 @@ public class Floor : MonoBehaviour
 	public List<StairCase> stairInit = new List<StairCase>();
 	public List<Stair> stairs;
 	
-	public bool switchOn;
+	bool isInitialized = false;
 	void Initialize()
 	{
 		stairs = new List<Stair>();
@@ -46,14 +46,17 @@ public class Floor : MonoBehaviour
 			stairs.Add(newStair);
 		}
 		Debug.Log(stairs.Count);
+		isInitialized = true;
 	}
 	
 	void Update()
 	{
-		if (switchOn)
+		if (!isInitialized)
 		{
-			Initialize();
-			switchOn = false;
+			GoUpStair upStair = (GoUpStair)FindObjectOfType(typeof (GoUpStair));
+			GoDownStair downStair = (GoDownStair)FindObjectOfType(typeof (GoDownStair));
+			if (upStair == null && downStair == null)
+				Initialize();
 		}
 	}
 	

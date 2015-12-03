@@ -92,6 +92,12 @@ public class FloorSearcher
 	
 	public List<Vector2> GetPath()
 	{
+		if (startingFloor == targetFloor)
+		{
+			List<Vector2> path = new List<Vector2>();
+			path.Add(targetPos);
+			return path;
+		}
 		PathFind(startingFloor, new List<Vector2>());
 		return FindBestPath();
 	}

@@ -24,6 +24,7 @@ public class RatHole : MonoBehaviour
 		Debug.Log("Hello");
 		target.SetActive(true);
 		target.transform.position = pairHole.transform.position;
+		target.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, 0);
 		yield break;
 	}
 	

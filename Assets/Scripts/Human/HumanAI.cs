@@ -6,6 +6,9 @@ public class HumanAI : MonoBehaviour, IFloorable
 {
 	public Floor currentFloor;
 	public float moveSpeed;
+	public GameObject emoticonHostile;
+	public GameObject emoticonLove;
+	public GameObject emoticonScared;
 	bool isLeftHeaded
 	{
 		get
@@ -67,41 +70,91 @@ public class HumanAI : MonoBehaviour, IFloorable
 	{
 		Idle, Flee, Angry, Love, Noticed
 	}
-	
-	public GameObject tempTest;
+	Dictionary<string, Favority> favorDic;
 	void Start()
 	{
-		NoticeSound(tempTest.GetComponent<IFloorable>());
+		favorDic = new Dictionary<string, Favority>();
+		favorDic.Add("Cat", towardCat);
+		favorDic.Add("Dog", towardDog);
+		favorDic.Add("Mouse", towardMouse);
 	}
-	void Update()
+	void FixedUpdate()
 	{
-		
-	}
-	
-	void HearSound()
-	{
-		
+		if (body.velocity.x == 0 || body.velocity.magnitude < 0.7f)
+			AnimationChange(AnimState.Stay);
+		else
+			AnimationChange(AnimState.Walk);
 	}
 	
 	public void SeePlayer(Transform target)
 	{
+		if (favorDic[target.tag] == Favority.Indifferent)
+			return;
+		else if (favorDic[target.tag] == Favority.NegativeAttract)
+			HostileApproach(target);
+		else if (favorDic[target.tag] == Favority.PositiveAttract)
+			FriendlyApproach(target);
+		else if (favorDic[target.tag] == Favority.NegativeRepulse)
+			RunAway(target);
+		
+		StopAllCoroutines();
 		chasingPlayer = target;
+		
+	}
+	void HostileApproach(Transform target)
+	{
+		emoticonLove.SetActive(false);
+		emoticonScared.SetActive(false);
+		if (!emoticonHostile.activeInHierarchy)
+			emoticonHostile.SetActive(true);
 		float deltaX = (target.position.x - transform.position.x);
 		if (Mathf.Abs(deltaX) < 0.5f)
 		{
 			BeStay();
 			return;
 		}
-		if (touchingPlayer == target)
+		//  if (target == chasingPlayer)
+		//  {
+		//  	BeStay();
+		//  	return;
+		//  }
+		float direction = Mathf.Sign(deltaX);
+		Move(direction);
+	}
+	void FriendlyApproach(Transform target)
+	{
+		emoticonHostile.SetActive(false);
+		emoticonScared.SetActive(false);
+		if (!emoticonLove.activeInHierarchy)
+			emoticonLove.SetActive(true);
+		float deltaX = (target.position.x - transform.position.x);
+		if (Mathf.Abs(deltaX) < 2f)
 		{
 			BeStay();
 			return;
 		}
+		//  if (target == chasingPlayer)
+		//  {
+		//  	BeStay();
+		//  	return;
+		//  }
 		float direction = Mathf.Sign(deltaX);
 		Move(direction);
 	}
+	void RunAway(Transform target)
+	{
+		emoticonLove.SetActive(false);
+		emoticonHostile.SetActive(false);
+		if (!emoticonScared.activeInHierarchy)
+			emoticonScared.SetActive(true);
+		float deltaX = (target.position.x - transform.position.x);
+		MoonWalk(Mathf.Sign(deltaX));
+	}
 	public void SeeNothing()
 	{
+		emoticonLove.SetActive(false);
+		emoticonScared.SetActive(false);
+		emoticonHostile.SetActive(false);
 		chasingPlayer = null;
 		BeStay();
 	}
@@ -116,14 +169,20 @@ public class HumanAI : MonoBehaviour, IFloorable
 		{
 			transform.eulerAngles = Vector3.zero;
 		}
-		AnimationChange(AnimState.Walk);
+		//  AnimationChange(AnimState.Walk);
 		body.velocity = new Vector2(direction * moveSpeed, body.velocity.y);
+	}
+	
+	void MoonWalk(float direction)
+	{
+		AnimationChange(AnimState.Walk);
+		body.velocity = new Vector2(-direction * moveSpeed, body.velocity.y);
 	}
 	
 	void BeStay()
 	{
 		body.velocity = new Vector2(0, body.velocity.y);
-		AnimationChange(AnimState.Stay);
+		//  AnimationChange(AnimState.Stay);
 	}
 	
 	void OnTriggerEnter2D(Collider2D coll)
@@ -143,6 +202,11 @@ public class HumanAI : MonoBehaviour, IFloorable
 				transform.eulerAngles = Vector3.zero;
 			}
 		}
+		if (targetTag == "Sound")
+		{
+			Debug.Log("Sounded");
+			NoticeSound(coll.transform.parent.GetComponent<IFloorable>());
+		}
 	}
 	void OnTriggerStay2D(Collider2D coll)
 	{
@@ -159,6 +223,10 @@ public class HumanAI : MonoBehaviour, IFloorable
 	
 	public void NoticeSound(IFloorable target)
 	{
+		emoticonLove.SetActive(false);
+		emoticonScared.SetActive(false);
+		emoticonHostile.SetActive(false);
+		StopAllCoroutines();
 		Vector2 destination = target.GetPos();
 		Floor targetFloor = target.GetFloor();
 		StartCoroutine(ChaseSound(destination, targetFloor));
