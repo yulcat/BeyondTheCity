@@ -13,6 +13,22 @@ public class CatBehavior : AnimalBehavior
 			isWalled = true;
 			wallOnRight = coll.transform.position.x > transform.position.x;
 		}
+	}
+	
+	void OnCollisionExit2D(Collision2D coll)
+	{
+		if (coll.gameObject.tag == "Wall")
+			isWalled = false;
+		if (coll.gameObject == pushingObject)
+		{
+			MovableObject target = pushingObject.GetComponent<MovableObject>();
+			isPushing = false;
+			target.pusher = null;
+			pushingObject = null;
+		}
+	}
+	void OnTriggerStay2D(Collider2D coll)
+	{
 		if (coll.transform.tag == "Object")
 		{
 			bool isOnRightSide = coll.transform.position.x > transform.position.x;
@@ -28,11 +44,8 @@ public class CatBehavior : AnimalBehavior
 			}
 		}
 	}
-	
-	void OnCollisionExit2D(Collision2D coll)
+	void OnTriggerExit2D(Collider2D coll)
 	{
-		if (coll.gameObject.tag == "Wall")
-			isWalled = false;
 		if (coll.gameObject == pushingObject)
 		{
 			MovableObject target = pushingObject.GetComponent<MovableObject>();
@@ -41,7 +54,6 @@ public class CatBehavior : AnimalBehavior
 			pushingObject = null;
 		}
 	}
-	
 	public override void Jump()
 	{
 		if (isGrounded)
