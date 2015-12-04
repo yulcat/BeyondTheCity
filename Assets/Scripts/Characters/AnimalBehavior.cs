@@ -3,6 +3,7 @@ using System.Collections;
 
 public abstract class AnimalBehavior : MonoBehaviour, IFloorable 
 {
+	public bool isPushing = false;
 	public Floor currentFloor;
 	public void SetFloor(Floor newFloor)
 	{
@@ -23,16 +24,6 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 	public Rigidbody2D body;
 	public bool isGrounded;
 	public bool isRightHeading = true;
-	public bool isPushing
-	{
-		get
-		{
-			if (pushingObject == null)
-				return false;
-			else
-				return true;
-		}
-	}
 	
 	enum AnimState
 	{
