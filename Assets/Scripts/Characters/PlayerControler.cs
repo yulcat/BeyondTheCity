@@ -9,20 +9,28 @@ public class PlayerControler : MonoBehaviour
 	void Start()
 	{
 		horControl = "Horizontal" + playerNumber;
+		vertControl = "Vertical" + playerNumber;
+		jumpControl = "Jump" + playerNumber;
+		barkControl = "Bark" + playerNumber;
+		interactControl = "Interact" + playerNumber;
 	}
 	
 	string horControl;
+	string vertControl;
+	string jumpControl;
+	string barkControl;
+	string interactControl;
 	
 	void Update()
 	{
 		MoveCommand(Input.GetAxis(horControl));
-		if (Input.GetButtonDown("Bark1"))
+		if (Input.GetButtonDown(barkControl))
 			targetCharacter.Bark();
-		if (Input.GetButtonDown("Jump1"))
+		if (Input.GetButtonDown(jumpControl))
 			targetCharacter.Jump();
-		if (Input.GetButtonDown("Interact1"))
+		if (Input.GetButtonDown(interactControl))
 			targetCharacter.Interact();
-		if (Input.GetAxis("Vertical1") < 0)
+		if (Input.GetAxis(vertControl) < 0)
 			targetCharacter.DownFloor();
 	}
 	

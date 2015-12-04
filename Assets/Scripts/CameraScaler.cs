@@ -29,7 +29,7 @@ public class CameraScaler : MonoBehaviour
 	void RescaleCam()
 	{
 		Vector4 posInfo = 0.5f * GetMaxDifferece();
-		float camSize = Mathf.Max(Mathf.Max(posInfo.x * 9/16, posInfo.y) + 2, 5);
+		float camSize = Mathf.Max(Mathf.Max(posInfo.x * 9/16, posInfo.y) + 4, 5);
 		Vector3 camPos = new Vector3(posInfo.z, posInfo.w, Camera.main.transform.position.z);
 		
 		Camera.main.orthographicSize = camSize;

@@ -7,12 +7,12 @@ public class FootDetector : MonoBehaviour
 	
 	void OnTriggerStay2D(Collider2D coll)
 	{
-		if (coll.gameObject!=this.gameObject && coll.transform.tag != "BackGround")
+		if (coll.gameObject!=this.gameObject && coll.transform.tag != "BackGround" && coll.transform.tag != "Sound")
 			owner.isGrounded = true;
 	}
 	void OnTriggerExit2D(Collider2D coll)
 	{
-		if (coll.gameObject!=this.gameObject && coll.transform.tag != "BackGround")
+		if (coll.gameObject!=this.gameObject && coll.transform.tag != "BackGround" && coll.transform.tag != "Sound")
 			owner.isGrounded = false;
 	}
 }

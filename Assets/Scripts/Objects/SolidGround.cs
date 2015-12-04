@@ -8,6 +8,9 @@ public class SolidGround : MonoBehaviour
 	{
 		IFloorable target = coll.gameObject.GetComponent<IFloorable>();
 		if (target != null)
+		{
 			target.SetFloor(floor);
+			Debug.Log(coll.gameObject.name);
+		}
 	}
 }
