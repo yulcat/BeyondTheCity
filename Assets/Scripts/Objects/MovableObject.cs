@@ -61,13 +61,13 @@ public class MovableObject : MonoBehaviour, IFloorable
 	}
 	void OnTriggerStay2D(Collider2D coll)
 	{
-		if (coll.GetComponent<Water>()!=null && weight<2)
-		{
-			Collider2D myCollider = GetComponent<Collider2D>();
-			float tall = myCollider.bounds.size.y;
-			float sink = Mathf.Clamp(coll.bounds.max.y - myCollider.bounds.min.y,0,tall);
-			float buoyancy = sink/tall*body.gravityScale*Physics2D.gravity.y;
-			body.AddForce(Vector2.down * buoyancy * body.mass * 2, ForceMode2D.Force);
-		}
+		if (coll.GetComponent<Water>()==null) return;
+		if (weight>1f) return;
+		
+		Collider2D myCollider = GetComponent<Collider2D>();
+		float tall = myCollider.bounds.size.y;
+		float sink = Mathf.Clamp(coll.bounds.max.y - myCollider.bounds.min.y,0,tall);
+		float buoyancy = sink/tall*body.gravityScale*Physics2D.gravity.y;
+		body.AddForce(Vector2.down * buoyancy * body.mass * 2, ForceMode2D.Force);
 	}
 }
