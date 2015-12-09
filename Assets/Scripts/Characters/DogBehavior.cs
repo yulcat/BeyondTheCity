@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class DogBehavior : AnimalBehavior
 {
@@ -18,6 +19,15 @@ public class DogBehavior : AnimalBehavior
 				target.pusher = gameObject;
 				isPushing = true;
 			}
+		}
+		else if (coll.GetComponent<Water>()!=null)
+		{
+			Collider2D body = GetComponents<Collider2D>().First(c=>!c.isTrigger);
+			float sink = Mathf.Abs(coll.bounds.max.y - body.bounds.min.y);
+			float tall = body.bounds.size.y;
+			float buoyancy = sink/tall*GetComponent<Rigidbody2D>().gravityScale*Physics2D.gravity.y;
+			GetComponent<Rigidbody2D>().AddForce(Vector2.down * buoyancy, ForceMode2D.Force);
+			GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity * 0.99f;
 		}
 	}
 	void OnTriggerExit2D(Collider2D coll)
