@@ -23,11 +23,11 @@ public class DogBehavior : AnimalBehavior
 		else if (coll.GetComponent<Water>()!=null)
 		{
 			Collider2D body = GetComponents<Collider2D>().First(c=>!c.isTrigger);
-			float sink = Mathf.Abs(coll.bounds.max.y - body.bounds.min.y);
 			float tall = body.bounds.size.y;
+			float sink = Mathf.Clamp(coll.bounds.max.y - body.bounds.min.y,0,tall);
 			float buoyancy = sink/tall*GetComponent<Rigidbody2D>().gravityScale*Physics2D.gravity.y;
-			GetComponent<Rigidbody2D>().AddForce(Vector2.down * buoyancy, ForceMode2D.Force);
-			GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity * 0.99f;
+			GetComponent<Rigidbody2D>().AddForce(Vector2.down * buoyancy * GetComponent<Rigidbody2D>().mass, ForceMode2D.Force);
+			//GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity * 0.99f;
 		}
 	}
 	void OnTriggerExit2D(Collider2D coll)

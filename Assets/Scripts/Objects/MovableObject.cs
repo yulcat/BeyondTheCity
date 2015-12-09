@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class MovableObject : MonoBehaviour, IFloorable
 {
@@ -57,5 +58,16 @@ public class MovableObject : MonoBehaviour, IFloorable
 	{
 		crackSound.SetActive(true);
 		Invoke("DisableSound", 1f);
+	}
+	void OnTriggerStay2D(Collider2D coll)
+	{
+		if (coll.GetComponent<Water>()!=null && weight<2)
+		{
+			Collider2D myCollider = GetComponent<Collider2D>();
+			float tall = myCollider.bounds.size.y;
+			float sink = Mathf.Clamp(coll.bounds.max.y - myCollider.bounds.min.y,0,tall);
+			float buoyancy = sink/tall*body.gravityScale*Physics2D.gravity.y;
+			body.AddForce(Vector2.down * buoyancy * body.mass * 2, ForceMode2D.Force);
+		}
 	}
 }
