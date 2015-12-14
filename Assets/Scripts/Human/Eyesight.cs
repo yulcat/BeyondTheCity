@@ -43,7 +43,7 @@ public class Eyesight : MonoBehaviour
 	
 	bool CheckAngle(Vector2 myPos, Vector2 targetPos)
 	{
-		float direction = (transform.eulerAngles.y == 0)? 1 : -1;
+		float direction = (transform.eulerAngles.y == 0)? -1 : 1;
 		float angle = Mathf.Atan2(targetPos.y - myPos.y, direction * (-targetPos.x + myPos.x)) * Mathf.Rad2Deg;
 		return (Mathf.Abs(angle) < fov/2);
 	}

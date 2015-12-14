@@ -3,6 +3,7 @@ using System.Collections;
 
 public abstract class AnimalBehavior : MonoBehaviour, IFloorable 
 {
+	Rigidbody2D veh;
 	public bool isPushing = false;
 	public Floor currentFloor;
 	public void SetFloor(Floor newFloor)
@@ -39,10 +40,14 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 		{
 			Debug.Log(newState.ToString());
 			currentAnim = newState;
+			animator.ResetTrigger("Stay");
+			animator.ResetTrigger("Walk");
+			animator.ResetTrigger("JumpUp");
+			animator.ResetTrigger("JumpDown");
 			animator.SetTrigger(currentAnim.ToString());
 		}
 		
-		if (currentAnim == AnimState.Stay)
+		if (currentAnim == AnimState.Stay && veh == null)
 			body.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 		else
 			body.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -52,7 +57,6 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 	//fields
 	public float jumpPower;
 	public float moveSpeed;
-	public float pushPower;
 	public float maxWeight;
 	
 	public GameObject pushingObject;
@@ -73,7 +77,15 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 		if (isGrounded)
 		{
 			if (moveInput == 0)
+			{
 				AnimationChange(AnimState.Stay);
+				if (veh != null)
+				{
+					body.velocity = veh.velocity;
+					Debug.Log(body.velocity);
+					return;
+				}
+			}
 			else
 			{
 				AnimationChange(AnimState.Walk);
@@ -97,7 +109,6 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 			return;
 		Debug.Log("Jump");
 		body.velocity = new Vector2(body.velocity.x, jumpPower);
-		//  StartCoroutine(JumpUp());
 	}
 	public void Bark()
 	{
@@ -129,15 +140,12 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 		Debug.Log("Interact");	
 	}
 	
-	public IEnumerator JumpUp()
+	public void Free()
 	{
-		float jumpTimer = 0.2f;
-		
-		while (jumpTimer > 0)
-		{
-			body.AddForce(jumpPower * Vector2.up);
-			jumpTimer -= Time.deltaTime;
-			yield return new WaitForFixedUpdate();
-		}
+		veh = null;
+	}
+	public void RideOn(Rigidbody2D target)
+	{
+		veh = target;
 	}
 }

@@ -72,7 +72,6 @@ public class CatBehavior : AnimalBehavior
 	
 	IEnumerator WallJump(float direction)
 	{
-		
 		yield break;
 	}
 }

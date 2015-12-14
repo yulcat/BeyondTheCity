@@ -14,9 +14,9 @@ public class HumanAI : MonoBehaviour, IFloorable
 		get
 		{
 			if (transform.eulerAngles == Vector3.zero)
-				return true;
-			else
 				return false;
+			else
+				return true;
 		}
 	}
 	Transform touchingPlayer;
@@ -165,11 +165,11 @@ public class HumanAI : MonoBehaviour, IFloorable
 	{
 		if (isLeftHeaded && direction > 0)
 		{
-			transform.eulerAngles = 180 * Vector3.up;
+			transform.eulerAngles = Vector3.zero;
 		}
 		if (!isLeftHeaded && direction < 0)
 		{
-			transform.eulerAngles = Vector3.zero;
+			transform.eulerAngles = 180 * Vector3.up;
 		}
 		//  AnimationChange(AnimState.Walk);
 		body.velocity = new Vector2(direction * moveSpeed, body.velocity.y);
@@ -198,12 +198,12 @@ public class HumanAI : MonoBehaviour, IFloorable
 			if (deltaX > 0 && isLeftHeaded)
 			{
 				Debug.Log("Oh");
-				transform.eulerAngles = 180 * Vector3.up;
+				transform.eulerAngles = Vector3.zero;
 			}
 			else if (deltaX < 0 && !isLeftHeaded)
 			{
 				Debug.Log("Oh");
-				transform.eulerAngles = Vector3.zero;
+				transform.eulerAngles = 180 * Vector3.up;
 			}
 		}
 		if (targetTag == "Sound")
