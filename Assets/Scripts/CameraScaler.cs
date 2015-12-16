@@ -46,7 +46,7 @@ public class CameraScaler : MonoBehaviour
 	{
 		Vector4 posInfo = 0.5f * GetMaxDifferece();
 		float camSize = Mathf.Max(Mathf.Max(posInfo.x * 9/16, posInfo.y) + 4, 5);
-		Vector3 camPos = new Vector3(posInfo.z, posInfo.w + 0.5f * camSize, Camera.main.transform.position.z);
+		Vector3 camPos = new Vector3(posInfo.z, posInfo.w, Camera.main.transform.position.z);
 		
 		float sizeDelta = camSize - Camera.main.orthographicSize;
 		Vector3 posDelta = camPos - Camera.main.transform.position;
