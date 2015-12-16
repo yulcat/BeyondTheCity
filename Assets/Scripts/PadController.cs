@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using GamepadInput;
 
 public class PadController : MonoBehaviour 
 {
+	// public Text showIntense;
 	public int padNumber;
 	public AnimalBehavior targetCharacter;
+	bool interactSwitch = false;
+	bool downfloorSwitch = false;
 	GamePad.Index TargetPad
 	{
 		get
@@ -23,14 +27,25 @@ public class PadController : MonoBehaviour
 	void Update()
 	{
 		MoveCommand(GamePad.GetAxis(GamePad.Axis.LeftStick, TargetPad).x);
-		if (GamePad.GetButtonDown(GamePad.Button.A, TargetPad))
+		if (GamePad.GetButtonDown(GamePad.Button.B, TargetPad))
 			targetCharacter.Bark();
 		if (GamePad.GetButtonDown(GamePad.Button.A, TargetPad))
 			targetCharacter.Jump();
-		if (GamePad.GetAxis(GamePad.Axis.LeftStick, TargetPad).y > 1)
+		if (!interactSwitch && GamePad.GetAxis(GamePad.Axis.LeftStick, TargetPad).y > 0.7f)
+		{
+			interactSwitch = true;
 			targetCharacter.Interact();
-		if (GamePad.GetAxis(GamePad.Axis.LeftStick, TargetPad).y < -1)
+		}
+		if (!downfloorSwitch && GamePad.GetAxis(GamePad.Axis.LeftStick, TargetPad).y < -0.7f)
+		{
+			downfloorSwitch = true;
 			targetCharacter.DownFloor();
+		}
+		if (interactSwitch && GamePad.GetAxis(GamePad.Axis.LeftStick, TargetPad).y <= 0.7f)
+			interactSwitch = false;
+		if (downfloorSwitch && GamePad.GetAxis(GamePad.Axis.LeftStick, TargetPad).y >= -0.7f)
+			downfloorSwitch = false;
+		// showIntense.text = "Pad" + padNumber + ": " + GamePad.GetAxis(GamePad.Axis.LeftStick, TargetPad).y;
 	}
 	
 	void MoveCommand(float moveInput)
