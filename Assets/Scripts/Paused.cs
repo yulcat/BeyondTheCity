@@ -20,11 +20,14 @@ public class Paused : MonoBehaviour {
 		gameObject.SetActive(false);
 		EventSystem.current.SetSelectedGameObject(prevSelectedObject);
 	}
-	public void Select(bool quitting){
-		if(!quitting){
+	public void Select(int todo){
+		if(todo==0){
 			ResumeGame();
 			return;
+		}else if(todo==1){
+			Application.LoadLevel(0);
+		}else{
+			Application.LoadLevel(Application.loadedLevel);
 		}
-		Application.LoadLevel(0);
 	}
 }
