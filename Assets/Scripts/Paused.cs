@@ -25,6 +25,6 @@ public class Paused : MonoBehaviour {
 			ResumeGame();
 			return;
 		}
-		Application.Quit();
+		Application.LoadLevel(0);
 	}
 }
