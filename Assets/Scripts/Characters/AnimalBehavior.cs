@@ -129,7 +129,7 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 		barkSound.SetActive(true);
 		barkSound.transform.position = transform.position + Vector3.forward * -4 ;
 		barkSound.transform.localScale = barkPower * Vector3.one;
-		Invoke("DisableBark", 0.5f);
+		Invoke("DisableBark", 1f);
 	}
 	
 	public GameObject passableFeet;
