@@ -6,7 +6,7 @@ public class Credits : MonoBehaviour
 	public GameObject mainMenu;
 	void Update()
 	{
-		if (Input.GetButtonDown("Bark1"))
+		if (Input.GetButtonDown("Cancel"))
 		{
 			mainMenu.SetActive(true);
 			gameObject.SetActive(false);
