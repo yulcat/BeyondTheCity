@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class CameraScaler : MonoBehaviour 
 {
 	public Transform[] players;
+	
 	
 	Vector4 GetMaxDifferece()
 	{
@@ -25,18 +27,22 @@ public class CameraScaler : MonoBehaviour
 		}
 		return new Vector4(maxX-minX, maxY-minY, maxX+minX, maxY+minY);
 	}
-	
+	float rescaleSpeed = 2;
+	float followSpeed = 2;
 	void RescaleCam()
 	{
 		Vector4 posInfo = 0.5f * GetMaxDifferece();
 		float camSize = Mathf.Max(Mathf.Max(posInfo.x * 9/16, posInfo.y) + 4, 5);
 		Vector3 camPos = new Vector3(posInfo.z, posInfo.w, Camera.main.transform.position.z);
 		
-		Camera.main.orthographicSize = camSize;
-		Camera.main.transform.position = camPos;
+		float sizeDelta = camSize - Camera.main.orthographicSize;
+		Vector3 posDelta = camPos - Camera.main.transform.position;
+		
+		Camera.main.orthographicSize += sizeDelta * rescaleSpeed * Time.deltaTime;
+		Camera.main.transform.position += followSpeed * posDelta * Time.deltaTime;
 	}
 	
-	void Update()
+	void FixedUpdate()
 	{
 		RescaleCam();
 	}

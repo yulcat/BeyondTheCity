@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
 {
 	public GameObject animals;
 	public Image mask;
-	public AnimalBehavior[] friends;
+	public Rigidbody2D[] friends;
 	public void StartNewLevel()
 	{
 		StartCoroutine(NewLevel());
