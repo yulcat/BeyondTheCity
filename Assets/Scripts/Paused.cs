@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using GamepadInput;
 
 public class Paused : MonoBehaviour {
 	GameObject prevSelectedObject;
@@ -12,7 +13,7 @@ public class Paused : MonoBehaviour {
 		resumeGame.GetComponent<Button>().Select();
 	}
 	void Update(){
-		if(Input.GetButtonDown("Bark1")){
+		if(Input.GetButtonDown("Bark1") || GamePad.GetState(0).B){
 			Time.timeScale = 1;
 			ResumeGame();
 		}
