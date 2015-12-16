@@ -19,6 +19,9 @@ public class PlayerControler : MonoBehaviour
 	string jumpControl;
 	string barkControl;
 	
+	bool interactSwitch = false;
+	bool downfloorSwitch = false;
+	
 	void Update()
 	{
 		MoveCommand(Input.GetAxis(horControl));
@@ -26,10 +29,20 @@ public class PlayerControler : MonoBehaviour
 			targetCharacter.Bark();
 		if (Input.GetButtonDown(jumpControl))
 			targetCharacter.Jump();
-		if (Input.GetAxis(vertControl) > 0)
+		if (!interactSwitch && Input.GetAxis(vertControl) > 0.7f)
+		{
+			interactSwitch = true;
 			targetCharacter.Interact();
-		if (Input.GetAxis(vertControl) < 0)
+		}	
+		if (!downfloorSwitch && Input.GetAxis(vertControl) < -0.7f)
+		{
+			downfloorSwitch = true;
 			targetCharacter.DownFloor();
+		}
+		if (interactSwitch && Input.GetAxis(vertControl) <= 0.7f)
+			interactSwitch = false;
+		if (downfloorSwitch && Input.GetAxis(vertControl) >= -0.7f)
+			downfloorSwitch = true;
 	}
 	
 	void MoveCommand(float moveInput)

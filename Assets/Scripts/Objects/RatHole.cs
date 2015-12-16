@@ -26,9 +26,9 @@ public class RatHole : MonoBehaviour
 		holeTimer = 5;
 		pairHole.GetComponent<RatHole>().holeTimer = 5;
 		target.SetActive(false);
-		Debug.Log("Disappeared");
-		//yield return new WaitForSeconds(1.0f);
-		Debug.Log("Hello");
+		// Debug.Log("Disappeared");
+		// //yield return new WaitForSeconds(1.0f);
+		// Debug.Log("Hello");
 		target.SetActive(true);
 		target.transform.position = pairHole.transform.position;
 		target.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, 0);
