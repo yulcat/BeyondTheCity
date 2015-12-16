@@ -11,7 +11,7 @@ public class FootDetector : MonoBehaviour
 			owner.isGrounded = true;
 		if (coll.gameObject.tag == "Cat" || coll.gameObject.tag == "Dog" || coll.gameObject.tag == "Mouse" || coll.gameObject.tag == "Human")
 			owner.RideOn(coll.GetComponent<Rigidbody2D>());
-		if (coll.transform.parent != null && coll.transform.parent.GetComponents<Rigidbody2D>() != null)
+		else if (coll.transform.parent != null && coll.transform.parent.GetComponents<Rigidbody2D>() != null)
 			owner.RideOn(coll.transform.parent.GetComponent<Rigidbody2D>());
 	}
 	void OnTriggerExit2D(Collider2D coll)
@@ -20,18 +20,18 @@ public class FootDetector : MonoBehaviour
 			owner.isGrounded = false;
 		if (coll.gameObject.tag == "Cat" || coll.gameObject.tag == "Dog" || coll.gameObject.tag == "Mouse" || coll.gameObject.tag == "Human")
 			owner.Free();
-		if (coll.transform.parent != null && coll.transform.parent.GetComponents<Rigidbody2D>() != null)
+		else if (coll.transform.parent != null && coll.transform.parent.GetComponents<Rigidbody2D>() != null)
 			owner.Free();
 	}
 	
-	void OnCollisionStay2D(Collision2D coll)
-	{
-		if (coll.transform.parent != null && coll.transform.parent.GetComponents<Rigidbody2D>() != null)
-			owner.RideOn(coll.transform.parent.GetComponent<Rigidbody2D>());
-	}
-	void OnCollisionExit2D(Collision2D coll)
-	{
-		if (coll.transform.parent != null && coll.transform.parent.GetComponents<Rigidbody2D>() != null)
-			owner.Free();
-	}
+	// void OnCollisionStay2D(Collision2D coll)
+	// {
+	// 	if (coll.transform.parent != null && coll.transform.parent.GetComponents<Rigidbody2D>() != null)
+	// 		owner.RideOn(coll.transform.parent.GetComponent<Rigidbody2D>());
+	// }
+	// void OnCollisionExit2D(Collision2D coll)
+	// {
+	// 	if (coll.transform.parent != null && coll.transform.parent.GetComponents<Rigidbody2D>() != null)
+	// 		owner.Free();
+	// }
 }
