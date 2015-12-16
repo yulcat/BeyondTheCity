@@ -1,13 +1,14 @@
 fileFormatVersion: 2
 guid: b87d8fff911e94745ade8c49ea2851aa
-timeCreated: 1450188407
+timeCreated: 1450255149
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: trash_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -30,7 +31,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,18 +39,28 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: .5, y: .5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  alignment: 9
+  spritePivot: {x: .548449576, y: .269429505}
+  spriteBorder: {x: 483, y: 0, z: 356, w: 144}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: trash_0
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 1
+        width: 337
+        height: 377
+      alignment: 9
+      pivot: {x: .491440594, y: .415302545}
+      border: {x: 39, y: 0, z: 58, w: 71}
   spritePackingTag: 
   userData: 
   assetBundleName: 
