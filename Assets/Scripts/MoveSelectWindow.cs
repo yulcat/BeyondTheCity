@@ -33,7 +33,7 @@ public class MoveSelectWindow : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(Input.GetButtonDown("Bark1")){
+		if(Input.GetButtonDown("Cancel")){
 			BackToMain();
 		}
 	}

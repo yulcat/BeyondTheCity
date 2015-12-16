@@ -13,7 +13,7 @@ public class Paused : MonoBehaviour {
 		resumeGame.GetComponent<Button>().Select();
 	}
 	void Update(){
-		if(Input.GetButtonDown("Bark1") || GamePad.GetState(0).B){
+		if(Input.GetButtonDown("Cancel") || GamePad.GetState(0).B){
 			Time.timeScale = 1;
 			ResumeGame();
 		}
