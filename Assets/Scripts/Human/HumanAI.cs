@@ -226,7 +226,13 @@ public class HumanAI : MonoBehaviour, IFloorable
 		}
 		if (targetTag == "Sound")
 		{
-			Debug.Log("Sounded");
+			if(coll.transform.parent.tag == "Cat" && (towardCat == Favority.Indifferent || towardCat == Favority.NegativeRepulse))
+				return;
+			if(coll.transform.parent.tag == "Dog" && (towardDog == Favority.Indifferent || towardDog == Favority.NegativeRepulse))
+				return;
+			if(coll.transform.parent.tag == "Mouse" && (towardMouse == Favority.Indifferent || towardMouse == Favority.NegativeRepulse))
+				return;
+			
 			NoticeSound(coll.transform.parent.GetComponent<IFloorable>());
 		}
 	}
