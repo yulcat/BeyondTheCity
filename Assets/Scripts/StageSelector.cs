@@ -7,28 +7,34 @@ public class StageSelector : MonoBehaviour
 	public GameObject mainMenu;
 	public Text stageNameText;
 	public string[] levelNames;
-	int stageIndex = 0;	
+	int stageIndex = 0;
+	void Start()
+	{
+		ShowSelectedLevel();
+	}
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.RightArrow))
+		if (Input.GetButtonDown("Horizontal1"))
 		{
-			if (stageIndex >= levelNames.Length - 1)
-				return;
-			stageIndex++;
+			if (Input.GetAxis("Horizontal1") > 0)
+			{
+				if (stageIndex >= levelNames.Length - 1)
+					return;
+				stageIndex++;
+			}
+			else if(Input.GetAxis("Horizontal1") < 0)
+			{
+				if (stageIndex <= 0)
+					return;
+				stageIndex--;
+			}
 			ShowSelectedLevel();
 		}
-		else if (Input.GetKeyDown(KeyCode.LeftArrow))
-		{
-			if (stageIndex <= 0)
-				return;
-			stageIndex--;
-			ShowSelectedLevel();
-		}
-		else if (Input.GetKeyDown(KeyCode.Return))
+		else if (Input.GetButtonDown("Jump1"))
 		{
 			LoadStage();
 		}
-		else if (Input.GetKeyDown(KeyCode.Backspace))
+		else if (Input.GetButtonDown("Bark1"))
 		{
 			mainMenu.SetActive(true);
 			gameObject.SetActive(false);
