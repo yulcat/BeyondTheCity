@@ -13,6 +13,7 @@ public class Paused : MonoBehaviour {
 	}
 	void Update(){
 		if(Input.GetButtonDown("Bark1")){
+			Time.timeScale = 1;
 			ResumeGame();
 		}
 	}
@@ -21,6 +22,7 @@ public class Paused : MonoBehaviour {
 		EventSystem.current.SetSelectedGameObject(prevSelectedObject);
 	}
 	public void Select(int todo){
+		Time.timeScale = 1;
 		if(todo==0){
 			ResumeGame();
 			return;

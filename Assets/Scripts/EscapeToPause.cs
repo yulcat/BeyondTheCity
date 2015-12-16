@@ -7,6 +7,7 @@ public class EscapeToPause : MonoBehaviour {
 	void Update () {
 		if(pauseMenu.activeSelf) return;
 		if(Input.GetKey(KeyCode.Escape)){
+			Time.timeScale = 0;
 			pauseMenu.SetActive(true);
 		}
 	}
