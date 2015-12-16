@@ -5,8 +5,21 @@ using System.Collections;
 public class CameraScaler : MonoBehaviour 
 {
 	public Transform[] players;
+	public float cameraDelay;
 	
-	
+	void Start()
+	{
+		rescaleSpeed = 0.2f;
+		followSpeed = 0.2f;
+		StartCoroutine(ChangeSpeed());
+	}
+	IEnumerator ChangeSpeed()
+	{
+		yield return new WaitForSeconds(cameraDelay);
+		rescaleSpeed = 2;
+		followSpeed = 2;
+		yield break;
+	}
 	Vector4 GetMaxDifferece()
 	{
 		float maxX = players[0].position.x;
@@ -27,8 +40,8 @@ public class CameraScaler : MonoBehaviour
 		}
 		return new Vector4(maxX-minX, maxY-minY, maxX+minX, maxY+minY);
 	}
-	float rescaleSpeed = 2;
-	float followSpeed = 2;
+	float rescaleSpeed;
+	float followSpeed;
 	void RescaleCam()
 	{
 		Vector4 posInfo = 0.5f * GetMaxDifferece();
@@ -46,4 +59,5 @@ public class CameraScaler : MonoBehaviour
 	{
 		RescaleCam();
 	}
+	
 }
