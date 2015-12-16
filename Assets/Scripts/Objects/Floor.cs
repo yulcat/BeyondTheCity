@@ -9,14 +9,17 @@ public class Floor : MonoBehaviour
 		public Vector2 enterPos;
 		public Vector2 outPos;
 		public Floor destination;
-		
-		public Stair(Vector2 enterPos, Vector2 outPos, Floor destination)
+		public StairCase target;
+		public Stair(Vector2 enterPos, Vector2 outPos, Floor destination, StairCase target)
 		{
 			this.enterPos = enterPos; 
 			this.outPos = outPos; 
 			this.destination = destination;
+			this.target = target;
 		}
 	}
+	
+	public bool isStair;
 	
 	public List<StairCase> stairInit = new List<StairCase>();
 	public List<Stair> stairs;
@@ -42,7 +45,7 @@ public class Floor : MonoBehaviour
 				enterPos = stairInit[i].goUp;
 				outPos = stairInit[i].goDown;
 			}
-			Stair newStair = new Stair(enterPos, outPos, destination);
+			Stair newStair = new Stair(enterPos, outPos, destination, stairInit[i]);
 			stairs.Add(newStair);
 		}
 		Debug.Log(stairs.Count);

@@ -6,13 +6,20 @@ public class RatHole : MonoBehaviour
 	public GameObject pairHole;
 	public float holeTimer;
 	
-	//  void OnTriggerStay2D(Collider2D coll)
-	//  {
-	//  	if (coll.transform.tag == "Mouse" && holeTimer == 0)
-	//  	{
-	//  		StartCoroutine(TeleportTarget(coll.gameObject));
-	//  	}
-	//  }
+	void OnTriggerStay2D(Collider2D coll)
+	{
+		if (coll.transform.tag == "Mouse" && coll.GetComponent<MouseBehavior>() != null)
+		{
+			coll.GetComponent<MouseBehavior>().ratHole = gameObject;
+		}
+	}
+	void OnTriggerExit2D(Collider2D coll)
+	{
+		if (coll.transform.tag == "Mouse" && coll.GetComponent<MouseBehavior>() != null)
+		{
+			coll.GetComponent<MouseBehavior>().ratHole = null;
+		}
+	}
 	
 	public IEnumerator TeleportTarget(GameObject target)
 	{

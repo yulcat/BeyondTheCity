@@ -3,18 +3,18 @@ using System.Collections;
 
 public class MouseBehavior : AnimalBehavior 
 {
-	GameObject ratHole;
+	public GameObject ratHole;
 	
-	void OnTriggerStay2D(Collider2D coll)
-	{
-		if (coll.gameObject.tag == "RatHole")
-			ratHole = coll.gameObject;
-	}
-	void OnTriggerExit2D(Collider2D coll)
-	{
-		if (coll.gameObject.tag == "RatHole")
-			ratHole = null; 
-	}
+	// void OnTriggerStay2D(Collider2D coll)
+	// {
+	// 	if (coll.gameObject.tag == "RatHole")
+	// 		ratHole = coll.gameObject;
+	// }
+	// void OnTriggerExit2D(Collider2D coll)
+	// {
+	// 	if (coll.gameObject.tag == "RatHole")
+	// 		ratHole = null; 
+	// }
 	
 	public override void Interact()
 	{

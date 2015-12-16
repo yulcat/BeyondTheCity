@@ -4,7 +4,11 @@ using System.Collections.Generic;
 
 public class HumanAI : MonoBehaviour, IFloorable
 {
+	public bool isDebugMode;
+	public bool _isOnStair;
+	GameObject cube;
 	public Floor currentFloor;
+	public StairCase currentStair;
 	public float moveSpeed;
 	public GameObject emoticonHostile;
 	public GameObject emoticonLove;
@@ -19,6 +23,7 @@ public class HumanAI : MonoBehaviour, IFloorable
 				return true;
 		}
 	}
+	Transform targetPlayer;
 	Transform touchingPlayer;
 	Transform chasingPlayer;
 	public Animator animator;
@@ -34,7 +39,6 @@ public class HumanAI : MonoBehaviour, IFloorable
 			return;
 		else
 		{
-			Debug.Log(newState.ToString());
 			currentAnim = newState;
 			animator.ResetTrigger("Stay");
 			animator.ResetTrigger("Walk");
@@ -48,17 +52,30 @@ public class HumanAI : MonoBehaviour, IFloorable
 	}
 	public void SetFloor(Floor newFloor)
 	{
+		_isOnStair = false;
 		currentFloor = newFloor;
+	}
+	public void SetStair(StairCase newStair)
+	{
+		_isOnStair = true;
+		currentStair = newStair;
 	}
 	public Floor GetFloor()
 	{
 		return currentFloor;
 	}
+	public StairCase GetStair()
+	{
+		return currentStair;
+	}
 	public Vector2 GetPos()
 	{
 		return transform.position;
 	}
-	
+	public bool IsOnStair()
+	{
+		return _isOnStair;
+	}
 	public enum Favority
 	{
 		PositiveAttract, NegativeAttract, NegativeRepulse, Indifferent
@@ -93,7 +110,10 @@ public class HumanAI : MonoBehaviour, IFloorable
 		if (favorDic[target.tag] == Favority.Indifferent)
 			return;
 		else if (favorDic[target.tag] == Favority.NegativeAttract)
+		{
 			HostileApproach(target);
+			targetPlayer = target;
+		}
 		else if (favorDic[target.tag] == Favority.PositiveAttract)
 			FriendlyApproach(target);
 		else if (favorDic[target.tag] == Favority.NegativeRepulse)
@@ -192,17 +212,15 @@ public class HumanAI : MonoBehaviour, IFloorable
 		string targetTag = coll.transform.tag;
 		if (targetTag == "Cat" || targetTag == "Dog" || targetTag == "Mouse")
 		{
-			if (emoticonHostile.activeInHierarchy)
+			if (emoticonHostile.activeInHierarchy && coll.transform == targetPlayer)
 				GameObject.Find("SceneControl").GetComponent<SceneControl>().RestartLevel();
 			float deltaX = coll.transform.position.x - transform.position.x;
 			if (deltaX > 0 && isLeftHeaded)
 			{
-				Debug.Log("Oh");
 				transform.eulerAngles = Vector3.zero;
 			}
 			else if (deltaX < 0 && !isLeftHeaded)
 			{
-				Debug.Log("Oh");
 				transform.eulerAngles = 180 * Vector3.up;
 			}
 		}
@@ -239,12 +257,21 @@ public class HumanAI : MonoBehaviour, IFloorable
 	IEnumerator ChaseSound(Vector2 destination, Floor targetFloor)
 	{
 		Debug.Log("Begin");
-		bool isOnStair = false;
-		List<Vector2> path = new FloorSearcher(GetPos(), destination, currentFloor, targetFloor).GetPath();
+		bool isOnStair = _isOnStair;
+		List<Vector2> path;
+		if (!isOnStair)
+			path = new FloorSearcher(GetPos(), destination, currentFloor, targetFloor).GetPath();
+		else
+			path = new FloorSearcher(GetPos(), destination, null, targetFloor, currentStair, null).GetPath();
 		Queue<Vector2> pathQueue = new Queue<Vector2>();
-		if (path == null || path.Count == 0)
+		if (path == null)
 		{
-			Debug.Log("Null or empty");
+			Debug.Log("Null path");
+			yield break;
+		}
+		if (path.Count == 0)
+		{
+			Debug.Log("zero path");
 			yield break;
 		}
 		for (int i=0; i<path.Count; i++)
@@ -252,8 +279,14 @@ public class HumanAI : MonoBehaviour, IFloorable
 			pathQueue.Enqueue(path[i]);
 		}
 		while(pathQueue.Count > 0)
-		{
+		{		
 			Vector2 nextDestine = pathQueue.Dequeue();
+			if (isDebugMode)
+			{
+				Destroy(cube);
+				cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+				cube.transform.position = nextDestine;
+			}
 			Vector2 pastDestine = Vector2.zero;
 			if (!isOnStair)
 			{

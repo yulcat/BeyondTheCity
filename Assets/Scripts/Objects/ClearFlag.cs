@@ -31,7 +31,7 @@ public class ClearFlag : MonoBehaviour
 	{
 		if (isDog && isCat && isMouse)
 		{
-			Application.LoadLevel("GameClearScene");
+			Application.LoadLevel(Application.loadedLevel + 1);
 		}
 	}
 }

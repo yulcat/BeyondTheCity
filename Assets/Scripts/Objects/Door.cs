@@ -40,6 +40,7 @@ public class Door : MonoBehaviour
 	{
 		if (isHumaned && doorCol.enabled)
 		{
+			GetComponent<AudioSource>().Play();
 			AnimationChange(AnimState.Open);
 			doorTimer += Time.deltaTime;
 		}

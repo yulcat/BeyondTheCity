@@ -6,7 +6,7 @@ public class DogBehavior : AnimalBehavior
 {
 	void OnTriggerStay2D(Collider2D coll)
 	{
-		if (coll.transform.tag == "Object")
+		if (coll.transform.tag == "Object" && coll.GetComponent<MovableObject>() != null)
 		{
 			bool isOnRightSide = coll.transform.position.x > transform.position.x;
 			if (isRightHeading == isOnRightSide && coll.gameObject.GetComponent<MovableObject>().weight <= maxWeight)

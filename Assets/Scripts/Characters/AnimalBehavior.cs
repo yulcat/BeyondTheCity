@@ -6,8 +6,11 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 	Rigidbody2D veh;
 	public bool isPushing = false;
 	public Floor currentFloor;
+	public StairCase currentStair;
+	bool _isOnStair;
 	public void SetFloor(Floor newFloor)
 	{
+		_isOnStair = false;
 		currentFloor = newFloor;
 	}
 	public Floor GetFloor()
@@ -18,7 +21,18 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 	{
 		return transform.position;
 	}
-	
+	public void SetStair(StairCase newStair)
+	{
+		_isOnStair = true;
+	}
+	public StairCase GetStair()
+	{
+		return currentStair;
+	}
+	public bool IsOnStair()
+	{
+		return _isOnStair;
+	}
 	public GameObject barkSound;
 	public float barkPower;
 	public Animator animator;
@@ -38,7 +52,7 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 			return;
 		else
 		{
-			Debug.Log(newState.ToString());
+			// Debug.Log(newState.ToString());
 			currentAnim = newState;
 			animator.ResetTrigger("Stay");
 			animator.ResetTrigger("Walk");
@@ -82,7 +96,6 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 				if (veh != null)
 				{
 					body.velocity = veh.velocity;
-					Debug.Log(body.velocity);
 					return;
 				}
 			}
@@ -107,15 +120,15 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 	{
 		if (!isGrounded)
 			return;
-		Debug.Log("Jump");
 		body.velocity = new Vector2(body.velocity.x, jumpPower);
 	}
 	public void Bark()
 	{
+		if (barkSound.activeInHierarchy)
+			return;
 		barkSound.SetActive(true);
 		barkSound.transform.position = transform.position + Vector3.forward * -4 ;
 		barkSound.transform.localScale = barkPower * Vector3.one;
-		Debug.Log("Bark");
 		Invoke("DisableBark", 0.5f);
 	}
 	
@@ -137,7 +150,7 @@ public abstract class AnimalBehavior : MonoBehaviour, IFloorable
 	
 	public virtual void Interact()
 	{
-		Debug.Log("Interact");	
+		
 	}
 	
 	public void Free()

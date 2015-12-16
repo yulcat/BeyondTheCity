@@ -7,10 +7,10 @@ public class SolidGround : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D coll)
 	{
 		IFloorable target = coll.gameObject.GetComponent<IFloorable>();
-		if (target != null)
+		if (target != null && target.GetType() != typeof(HumanAI) && target.GetType() != typeof(MovableObject))
 		{
 			target.SetFloor(floor);
-			Debug.Log(coll.gameObject.name);
+			// Debug.Log(coll.gameObject.name);
 		}
 	}
 }

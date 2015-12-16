@@ -5,6 +5,7 @@ using System.Linq;
 public class MovableObject : MonoBehaviour, IFloorable
 {
 	private GameObject _pusher;
+	bool _isOnStair;
 	public GameObject pusher
 	{
 		get
@@ -40,6 +41,7 @@ public class MovableObject : MonoBehaviour, IFloorable
 	}
 	public void SetFloor(Floor newFloor)
 	{
+		_isOnStair = false;
 		Debug.Log("newFloor");
 		currentFloor = newFloor;
 		if (body.velocity.y < -0.5f)
@@ -50,6 +52,20 @@ public class MovableObject : MonoBehaviour, IFloorable
 		return currentFloor;
 	}
 	public Floor currentFloor;
+	public StairCase currentStair;
+	public void SetStair(StairCase newStair)
+	{
+		_isOnStair = true;
+		currentStair = newStair;
+	}
+	public StairCase GetStair()
+	{
+		return currentStair;
+	}
+	public bool IsOnStair()
+	{
+		return _isOnStair;
+	}
 	void DisableSound()
 	{
 		crackSound.SetActive(false);
