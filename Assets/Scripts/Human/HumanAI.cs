@@ -235,6 +235,15 @@ public class HumanAI : MonoBehaviour, IFloorable
 		string targetTag = coll.transform.tag;
 		if (targetTag == "Cat" || targetTag == "Dog" || targetTag == "Mouse")
 			touchingPlayer = coll.transform;
+		else if (coll.GetComponent<Water>()!=null)
+		{
+			Collider2D body = GetComponent<Collider2D>();
+			float tall = body.bounds.size.y;
+			float sink = Mathf.Clamp(coll.bounds.max.y - body.bounds.min.y,0,tall);
+			float buoyancy = sink/tall*GetComponent<Rigidbody2D>().gravityScale*Physics2D.gravity.y;
+			GetComponent<Rigidbody2D>().AddForce(Vector2.down * buoyancy * GetComponent<Rigidbody2D>().mass, ForceMode2D.Force);
+			//GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity * 0.99f;
+		}
 	}
 	void OnTriggerExit2D(Collider2D coll)
 	{
