@@ -9,16 +9,16 @@ public class TriggeredLamp : MonoBehaviour {
 	public bool lightIsOnLastFrame = false;
 	
 	// Update is called once per frame
-	void FixedUpdate () {
-		if(!lightIsOn && lightIsOnLastFrame){
-			lightIsOnLastFrame = false;
-			GetComponent<SpriteRenderer>().sprite = lightOff;
-			foreach(GameObject obj in lights){
-				obj.SetActive(false);
-			}
-		}
-		lightIsOn = false;
-	}
+	// void FixedUpdate () {
+	// 	if(!lightIsOn && lightIsOnLastFrame){
+	// 		lightIsOnLastFrame = false;
+	// 		GetComponent<SpriteRenderer>().sprite = lightOff;
+	// 		foreach(GameObject obj in lights){
+	// 			obj.SetActive(false);
+	// 		}
+	// 	}
+	// 	lightIsOn = false;
+	// }
 	
 	void OnTriggerStay2D(Collider2D coll)
 	{
