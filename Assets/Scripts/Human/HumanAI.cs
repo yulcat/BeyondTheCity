@@ -271,7 +271,7 @@ public class HumanAI : MonoBehaviour, IFloorable
 	
 	IEnumerator ChaseSound(Vector2 destination, Floor targetFloor)
 	{
-		Debug.Log("Begin");
+		// Debug.Log("Begin");
 		bool isOnStair = _isOnStair;
 		List<Vector2> path;
 		if (!isOnStair)
@@ -281,12 +281,12 @@ public class HumanAI : MonoBehaviour, IFloorable
 		Queue<Vector2> pathQueue = new Queue<Vector2>();
 		if (path == null)
 		{
-			Debug.Log("Null path");
+			// Debug.Log("Null path");
 			yield break;
 		}
 		if (path.Count == 0)
 		{
-			Debug.Log("zero path");
+			// Debug.Log("zero path");
 			yield break;
 		}
 		for (int i=0; i<path.Count; i++)
@@ -314,7 +314,7 @@ public class HumanAI : MonoBehaviour, IFloorable
 				}
 				BeStay();
 				isOnStair = true;
-				Debug.Log("Stair!");
+				// Debug.Log("Stair!");
 			}
 			else
 			{

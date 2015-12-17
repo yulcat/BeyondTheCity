@@ -12,7 +12,7 @@ public class DogBehavior : AnimalBehavior
 			if (isRightHeading == isOnRightSide && coll.gameObject.GetComponent<MovableObject>().weight <= maxWeight)
 			{
 				pushingObject = coll.gameObject;
-				Debug.Log("Pushing!!!");
+				// Debug.Log("Pushing!!!");
 			}
 			if (pushingObject!= null)
 			{

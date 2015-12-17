@@ -30,7 +30,7 @@ public class Door : MonoBehaviour
 			return;
 		else
 		{
-			Debug.Log(newState.ToString());
+			// Debug.Log(newState.ToString());
 			currentAnim = newState;
 			animator.SetTrigger(currentAnim.ToString());
 		}

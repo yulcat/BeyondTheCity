@@ -7,10 +7,10 @@ public class GoDownStair : MonoBehaviour
 	
 	void OnTriggerStay2D(Collider2D coll)
 	{
-		Debug.Log("Wow");
+		// Debug.Log("Wow");
 		if (coll.transform.tag == "Ground")
 		{
-			Debug.Log("Found Ground");
+			// Debug.Log("Found Ground");
 			Floor target = coll.GetComponent<SolidGround>().floor;
 			if (target != null && !target.stairInit.Contains(owner))
 			{

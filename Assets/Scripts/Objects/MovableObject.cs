@@ -20,7 +20,7 @@ public class MovableObject : MonoBehaviour, IFloorable
 				body.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 				body.velocity = Vector2.zero;
 				//  body.gravityScale = 0.5f;
-				Debug.Log(body.velocity);
+				// Debug.Log(body.velocity);
 			}
 			else
 			{
@@ -42,7 +42,7 @@ public class MovableObject : MonoBehaviour, IFloorable
 	public void SetFloor(Floor newFloor)
 	{
 		_isOnStair = false;
-		Debug.Log("newFloor");
+		// Debug.Log("newFloor");
 		currentFloor = newFloor;
 		if (body.velocity.y < -0.5f)
 			CrackSound();

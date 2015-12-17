@@ -48,7 +48,7 @@ public class Floor : MonoBehaviour
 			Stair newStair = new Stair(enterPos, outPos, destination, stairInit[i]);
 			stairs.Add(newStair);
 		}
-		Debug.Log(stairs.Count);
+		// Debug.Log(stairs.Count);
 		isInitialized = true;
 	}
 	
