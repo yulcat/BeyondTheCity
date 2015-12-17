@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
+using GamepadInput;
 
 public class MinimapControl : MonoBehaviour 
 {
 	public GameObject minimap;
 	void Update () 
 	{
-		if (Input.GetKey(KeyCode.Tab))
+		if (Input.GetKey(KeyCode.Tab) || GamePad.GetButton(GamePad.Button.Y,0))
 		{
 			minimap.SetActive(true);
 		}
-		else if(Input.GetKeyUp(KeyCode.Tab))
+		else if(Input.GetKeyUp(KeyCode.Tab) || GamePad.GetButtonUp(GamePad.Button.Y,0))
 		{
 			minimap.SetActive(false);
 		}
