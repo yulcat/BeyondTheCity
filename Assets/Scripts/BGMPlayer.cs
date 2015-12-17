@@ -31,6 +31,10 @@ public class BGMPlayer : MonoBehaviour {
 	}
 	
 	void Update(){
+		if(Input.GetKeyDown(KeyCode.Minus))
+			source.volume -= 0.1f;
+		else if(Input.GetKeyDown(KeyCode.Equals))
+			source.volume += 0.1f;
 		transform.position = Camera.main.transform.position;
 	}
 }
