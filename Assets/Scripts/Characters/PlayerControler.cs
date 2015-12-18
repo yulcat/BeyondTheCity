@@ -42,7 +42,7 @@ public class PlayerControler : MonoBehaviour
 		if (interactSwitch && Input.GetAxis(vertControl) <= 0.7f)
 			interactSwitch = false;
 		if (downfloorSwitch && Input.GetAxis(vertControl) >= -0.7f)
-			downfloorSwitch = true;
+			downfloorSwitch = false;
 	}
 	
 	void MoveCommand(float moveInput)
