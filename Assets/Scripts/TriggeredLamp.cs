@@ -22,6 +22,8 @@ public class TriggeredLamp : MonoBehaviour {
 	
 	void OnTriggerStay2D(Collider2D coll)
 	{
+        if (coll.tag != "Mouse" && coll.tag != "Cat" && coll.tag != "Dog")
+            return;
 		lightIsOn = true;
 		if(!lightIsOnLastFrame){
 			lightIsOnLastFrame = true;
